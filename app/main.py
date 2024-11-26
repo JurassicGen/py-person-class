@@ -4,7 +4,10 @@ class Person:
     def __init__(self, name: str, age: int) -> None:
         self.name = name
         self.age = age
-        Person.people.update({self.name: self})
+        self.wife = None
+        self.husband = None
+        if self.name not in Person.people.keys():
+            Person.people.update({self.name: self})
 
 
 def create_person_list(people: list) -> list:
@@ -15,10 +18,17 @@ def create_person_list(people: list) -> list:
 
     for person_data in people:
         person = Person.people.get(person_data.get("name"))
+        if not person: continue
 
-        if "wife" in person_data and person_data.get("wife"):
-            person.wife = Person.people.get(person_data.get("wife"))
-        elif "husband" in person_data and person_data.get("husband"):
-            person.husband = Person.people.get(person_data.get("husband"))
+        if "wife" in person_data:
+            if person_data.get("wife"):
+                person.wife = Person.people.get(person_data.get("wife"))
+            else:
+                delattr(person, "wife")
+        if "husband" in person_data:
+            if person_data.get("husband"):
+                person.husband = Person.people.get(person_data.get("husband"))
+            else:
+                delattr(person, "husband")
 
     return persons
