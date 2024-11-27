@@ -6,8 +6,7 @@ class Person:
         self.age = age
         self.wife = None
         self.husband = None
-        if self.name not in Person.people.keys():
-            Person.people.update({self.name: self})
+        Person.people.update({self.name: self})
 
 
 def create_person_list(people: list) -> list:
@@ -18,7 +17,8 @@ def create_person_list(people: list) -> list:
 
     for person_data in people:
         person = Person.people.get(person_data.get("name"))
-        if not person: continue
+        if not person:
+            continue
 
         if "wife" in person_data:
             if person_data.get("wife"):
